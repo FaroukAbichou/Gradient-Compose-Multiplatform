@@ -35,7 +35,6 @@ fun AnimationLayout() {
     var state by remember { mutableStateOf(false) }
 
     val startColor = Color(0xffeb6a63)
-
     val endColor = Color(0xfff3d1b0)
 
     val startPointX = Offset(
@@ -90,6 +89,7 @@ fun AnimationLayout() {
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .background(gradientBrush)
             ,
         contentAlignment = Alignment.Center
     ) {
@@ -99,13 +99,13 @@ fun AnimationLayout() {
             },
             state = state
         )
-        Text(
-            text = "Farouk Abichou",
-            style = TextStyle(
-                brush = gradientBrush,
-                fontSize = 50.sp
-            ),
-        )
+//        Text(
+//            text = "Farouk Abichou",
+//            style = TextStyle(
+//                brush = gradientBrush,
+//                fontSize = 50.sp
+//            ),
+//        )
     }
 }
 
