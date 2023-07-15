@@ -103,7 +103,7 @@ fun AnimationLayout() {
             text = "Farouk Abichou",
             style = TextStyle(
                 brush = gradientBrush,
-                fontSize = 100.sp
+                fontSize = 500.sp
             ),
         )
     }
