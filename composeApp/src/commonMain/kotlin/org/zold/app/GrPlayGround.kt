@@ -11,11 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.ExperimentalTextApi
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 
 @Composable
@@ -24,73 +19,67 @@ fun GrPlayGround() {
         modifier = Modifier
             .fillMaxSize()
     ) {
-        AnimationLayout()
+        AnimationLayout(
+            colors = listOf(
+                Color(0xffeb6a63),
+                Color(0xfff3d1b0),
+                Color(0xffdaf592),
+            ),
+            points = listOf(
+                Offset(
+                    x = 2000f,
+                    y = 200f
+                ),
+                Offset(
+                    x = 200f,
+                    y = 6000f
+                )
+            )
+        )
     }
 }
 
-@OptIn(ExperimentalTextApi::class)
 @Composable
-fun AnimationLayout() {
+fun AnimationLayout(
+    colors: List<Color>,
+    points: List<Offset>,
+) {
 
     var state by remember { mutableStateOf(false) }
+    var animatedColors by remember { mutableStateOf(listOf(Color.Black)) }
+    var animatedPoints by remember { mutableStateOf(listOf(Offset.Zero)) }
 
-    val startColor = Color(0xffeb6a63)
-
-    val endColor = Color(0xfff3d1b0)
-
-    val startPointX = Offset(
-        x= 800f,
-        y= 300f
-    )
-
-    val endPointX = Offset(
-        x= 200f,
-        y= 600f
-    )
-
-
-
-    val backgroundColor1 by animateColorAsState(
-        if (state) endColor else startColor,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 2000),
-            repeatMode = RepeatMode.Reverse
+    for (color in colors) {
+        val currColor by animateColorAsState(
+            color,
+            animationSpec = infiniteRepeatable(
+                animation = tween(durationMillis = 2000),
+                repeatMode = RepeatMode.Reverse
+            )
         )
-    )
-    val backgroundColor2 by animateColorAsState(
-        if (state) startColor else endColor,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 2000),
-            repeatMode = RepeatMode.Reverse
+        animatedColors = animatedColors + currColor
+    }
+    for (point in points) {
+        val currPoint by animateOffsetAsState(
+            point,
+            animationSpec = infiniteRepeatable(
+                animation = tween(durationMillis = 2000),
+                repeatMode = RepeatMode.Reverse
+            ),
         )
-    )
-
-    val startX by animateOffsetAsState(
-        if (state) endPointX else startPointX,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 2000),
-            repeatMode = RepeatMode.Reverse
-        )
-    )
-
-    val startY by animateOffsetAsState(
-        if (state) endPointX*3F else startPointX*4F,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 2000),
-            repeatMode = RepeatMode.Reverse
-        )
-    )
+        animatedPoints = animatedPoints + currPoint
+    }
 
     val gradientBrush = Brush.linearGradient(
-        colors = listOf(backgroundColor1, backgroundColor2),
-        start = startX,
-        end = startY
+        colors = animatedColors,
+        start = animatedPoints[2],
+        end = animatedPoints[1]
     )
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            ,
+            .background(gradientBrush),
         contentAlignment = Alignment.Center
     ) {
         AnimationLauncher(
@@ -99,13 +88,13 @@ fun AnimationLayout() {
             },
             state = state
         )
-        Text(
-            text = "Farouk Abichou",
-            style = TextStyle(
-                brush = gradientBrush,
-                fontSize = 50.sp
-            ),
-        )
+//        Text(
+//            text = "Farouk Abichou",
+//            style = TextStyle(
+//                brush = gradientBrush,
+//                fontSize = 50.sp
+//            ),
+//        )
     }
 }
 
