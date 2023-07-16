@@ -33,6 +33,10 @@ fun GrPlayGround() {
                 Offset(
                     x = 200f,
                     y = 6000f
+                ),
+                Offset(
+                    x = 300f,
+                    y = 400f
                 )
             )
         )
@@ -51,7 +55,7 @@ fun AnimationLayout(
 
     for (color in colors) {
         val currColor by animateColorAsState(
-            color,
+            if (state)color else colors[0],
             animationSpec = infiniteRepeatable(
                 animation = tween(durationMillis = 2000),
                 repeatMode = RepeatMode.Reverse
@@ -61,7 +65,7 @@ fun AnimationLayout(
     }
     for (point in points) {
         val currPoint by animateOffsetAsState(
-            point,
+            if (state)point else points[0],
             animationSpec = infiniteRepeatable(
                 animation = tween(durationMillis = 2000),
                 repeatMode = RepeatMode.Reverse
@@ -72,8 +76,8 @@ fun AnimationLayout(
 
     val gradientBrush = Brush.linearGradient(
         colors = animatedColors,
-        start = animatedPoints[2],
-        end = animatedPoints[1]
+        start= animatedPoints[0],
+        end = animatedPoints[2]
     )
 
     Box(
