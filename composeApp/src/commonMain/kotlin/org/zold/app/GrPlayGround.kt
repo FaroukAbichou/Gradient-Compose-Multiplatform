@@ -29,6 +29,7 @@ fun AnimationLayout() {
 
     val startColor = Color(0xffeb6a63)
     val endColor = Color(0xfff3d1b0)
+    val endColor2 = Color(0xfff3452fe)
 
     val startPointX = Offset(
         x= 800f,
@@ -43,7 +44,7 @@ fun AnimationLayout() {
 
 
     val backgroundColor1 by animateColorAsState(
-        if (state) endColor else startColor,
+        if (state) endColor2 else startColor,
         animationSpec = infiniteRepeatable(
             animation = tween(durationMillis = 2000),
             repeatMode = RepeatMode.Reverse
@@ -51,6 +52,13 @@ fun AnimationLayout() {
     )
     val backgroundColor2 by animateColorAsState(
         if (state) startColor else endColor,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 2000),
+            repeatMode = RepeatMode.Reverse
+        )
+    )
+    val backgroundColor3 by animateColorAsState(
+        if (state) endColor else endColor2,
         animationSpec = infiniteRepeatable(
             animation = tween(durationMillis = 2000),
             repeatMode = RepeatMode.Reverse
@@ -66,7 +74,7 @@ fun AnimationLayout() {
     )
 
     val startY by animateOffsetAsState(
-        if (state) endPointX*3F else startPointX*4F,
+        if (state) endPointX*4F else startPointX*5F,
         animationSpec = infiniteRepeatable(
             animation = tween(durationMillis = 2000),
             repeatMode = RepeatMode.Reverse
@@ -74,7 +82,7 @@ fun AnimationLayout() {
     )
 
     val gradientBrush = Brush.linearGradient(
-        colors = listOf(backgroundColor1, backgroundColor2),
+        colors = listOf(backgroundColor1, backgroundColor2,backgroundColor3),
         start = startX,
         end = startY
     )
