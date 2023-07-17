@@ -91,7 +91,7 @@ fun AnimationLayout() {
         modifier = Modifier
             .fillMaxSize()
             .background(gradientBrush)
-            ,
+        ,
         contentAlignment = Alignment.Center
     ) {
         AnimationLauncher(
