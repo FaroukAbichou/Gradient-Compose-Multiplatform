@@ -15,11 +15,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.ShaderBrush
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.composegradient.ui.theme.Coral
 import com.example.composegradient.ui.theme.Idk
 import com.example.composegradient.ui.theme.LightYellow
+import com.example.composegradient.ui.theme.Transparent
 
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -41,7 +44,7 @@ fun CustomShaderBrush() {
     val startX by animateOffsetAsState(
         if (state) endPointX else startPointX,
         animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 10000),
+            animation = tween(durationMillis = 1000),
             repeatMode = RepeatMode.Reverse
         )
     )
@@ -49,7 +52,7 @@ fun CustomShaderBrush() {
     val startY by animateOffsetAsState(
         if (state) endPointX * 4F else startPointX * 5F,
         animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 10000),
+            animation = tween(durationMillis = 1000),
             repeatMode = RepeatMode.Reverse
         )
     )
@@ -57,15 +60,15 @@ fun CustomShaderBrush() {
         modifier = Modifier
             .drawWithCache {
                 val shader = RuntimeShader(CUSTOM_SHADER)
-                val shaderBrush = androidx.compose.ui.graphics.ShaderBrush(shader)
-                shader.setFloatUniform("resolution", startX.y, startY.x)
+                val shaderBrush = ShaderBrush(shader)
+                shader.setFloatUniform("resolution", startX.x, startY.x)
                 onDrawBehind {
                     shader.setColorUniform(
                         "color",
                         Color.valueOf(
-                            LightYellow.red, LightYellow.green,
-                            LightYellow
-                                .blue,
+                            LightYellow.red,
+                            LightYellow.green,
+                            LightYellow.blue,
                             LightYellow.alpha
                         )
                     )
@@ -76,15 +79,6 @@ fun CustomShaderBrush() {
                             Coral.green,
                             Coral.blue,
                             Coral.alpha
-                        )
-                    )
-                    shader.setColorUniform(
-                        "color3",
-                        Color.valueOf(
-                            Idk.red,
-                            Idk.green,
-                            Idk.blue,
-                            Idk.alpha
                         )
                     )
                     drawRect(shaderBrush)
