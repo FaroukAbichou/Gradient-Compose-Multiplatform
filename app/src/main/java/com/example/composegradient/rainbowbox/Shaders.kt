@@ -1,4 +1,4 @@
-package dev.riggaroo.rainbowbox
+package com.example.composegradient.rainbowbox
 
 import org.intellij.lang.annotations.Language
 

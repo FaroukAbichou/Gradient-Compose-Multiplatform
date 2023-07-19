@@ -1,4 +1,4 @@
-package dev.riggaroo.rainbowbox
+package com.example.composegradient.rainbowbox
 
 import android.opengl.GLES20
 import android.opengl.GLES20.glDisableVertexAttribArray
