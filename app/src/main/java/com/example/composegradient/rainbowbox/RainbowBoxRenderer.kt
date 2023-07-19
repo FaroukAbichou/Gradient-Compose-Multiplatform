@@ -48,7 +48,7 @@ class RainbowBoxRenderer : GLSurfaceView.Renderer {
         shaderProgram.bindUniforms(aspectRatio, layerModelMatrix, viewProjMatrix)
 
         // draw box
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, rectOutlineVao.vertexCount())
+        glDrawArrays(GL_TRIANGLE_FAN, 0, rectOutlineVao.vertexCount())
 
         // unbind shader
         shaderProgram.unbind()
