@@ -58,14 +58,11 @@ val FRAGMENT_SHADER = """
 
     in highp float vProgress;
 
-    const vec4 COLORS[7] = vec4[](
+    const vec4 COLORS[4] = vec4[](
         vec4(0.9529, 0.6392, 0.5922, 1.0),
         vec4(0.9725, 0.9333, 0.5804, 1.0),
         vec4(0.9529, 0.6392, 0.5922, 1.0),
-        vec4(0.9725, 0.9333, 0.5804, 1.0),
-        vec4(0.9529, 0.6392, 0.5922, 1.0),
-        vec4(0.9725, 0.9333, 0.5804, 1.0),
-        vec4(0.9529, 0.6392, 0.5922, 1.0)
+        vec4(0.9725, 0.9333, 0.5804, 1.0)
         // Re-adding the first color to avoid mod() operation after 'colorIndex + 1'
         );
 
@@ -80,7 +77,7 @@ val FRAGMENT_SHADER = """
         // meaning that our lovely square probably turned into a rect with some wild aspect ratio.
         float aspectRatio = uAspectRatio ;
         float vertLen = 1.0f;
-        float horizLen = aspectRatio ;
+        float horizLen = aspectRatio;
         float perimeter = vertLen * 2.0 + horizLen * 2.0;
         float vertProp = vertLen / perimeter;
         float horizProp = horizLen / perimeter;
