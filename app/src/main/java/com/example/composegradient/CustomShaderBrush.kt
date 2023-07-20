@@ -8,5 +8,6 @@ import com.example.composegradient.rainbowbox.RainbowBox
 @Composable
 @Preview
 fun CustomShaderBrush() {
+
     RainbowBox()
 }
