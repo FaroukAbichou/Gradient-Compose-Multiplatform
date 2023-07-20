@@ -78,9 +78,9 @@ val FRAGMENT_SHADER = """
     void main() {
         // We need to count the progress along the perimeter, keeping in mind that scaling along x and y is not uniform,
         // meaning that our lovely square probably turned into a rect with some wild aspect ratio.
-        float aspectRatio = uAspectRatio;
+        float aspectRatio = uAspectRatio ;
         float vertLen = 1.0f;
-        float horizLen = aspectRatio;
+        float horizLen = aspectRatio ;
         float perimeter = vertLen * 2.0 + horizLen * 2.0;
         float vertProp = vertLen / perimeter;
         float horizProp = horizLen / perimeter;

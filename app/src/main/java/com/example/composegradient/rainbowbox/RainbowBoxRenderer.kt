@@ -36,7 +36,7 @@ fun RainbowBox() {
         Matrix.setIdentityM(layerModelMatrix, 0)
         Matrix.scaleM(layerModelMatrix, 0, 0.5f, 0.5f, 1.0f)
         Matrix.setIdentityM(viewProjMatrix, 0)
-        Matrix.scaleM(viewProjMatrix, 0, 1.0f, aspectRatio, 1.0f)
+        Matrix.scaleM(viewProjMatrix, 0, 2.0f, aspectRatio, 0.0f)
     }
 
     // Calculate the aspect ratio whenever the size of the Composable changes
