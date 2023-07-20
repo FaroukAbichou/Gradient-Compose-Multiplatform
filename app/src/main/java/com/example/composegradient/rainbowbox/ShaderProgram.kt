@@ -44,6 +44,7 @@ class ShaderProgram {
     }
 
 
+
     private fun compileAndLinkShaders() {
         // compile both the vertex and fragment shaders
         val vertexShaderId = compileShader(GLES20.GL_VERTEX_SHADER, VERTEX_SHADER)
