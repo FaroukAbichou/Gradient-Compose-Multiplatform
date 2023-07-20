@@ -53,8 +53,8 @@ fun RainbowBox() {
 
                     override fun onDrawFrame(gl: GL10?) {
                         // set background to white
-                        glClearColor(1.0f, 1.0f, 1.0f, 1.0f)
-                        glClear(GL_COLOR_BUFFER_BIT)
+//                        glClearColor(1.0f, 1.0f, 1.0f, 1.0f)
+//                        glClear(GL_COLOR_BUFFER_BIT)
 
                         setupMatrices()
 
