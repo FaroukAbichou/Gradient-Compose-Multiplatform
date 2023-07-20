@@ -17,7 +17,7 @@ import kotlin.math.min
 
 @Composable
 fun RainbowBox() {
-    var aspectRatio by remember { mutableStateOf(1.0f) }
+    var aspectRatio by remember { mutableStateOf(4.0f) }
 
     // Helper class that wraps the GLSL shaders, binds them etc
      val shaderProgram: ShaderProgram = ShaderProgram()
@@ -38,21 +38,7 @@ fun RainbowBox() {
         Matrix.setIdentityM(viewProjMatrix, 0)
         Matrix.scaleM(viewProjMatrix, 0, 1.0f, aspectRatio, 1.0f)
     }
-    object {
 
-        internal fun modelMatrixForBoundingBox(
-            layerSize: android.util.Size,
-            outputModelMatrix: FloatArray
-        ) {
-            val x = 0f
-            val y = 0f
-            val scaleX = layerSize.width / 2.0f
-            val scaleY = layerSize.height / 2.0f
-            outputModelMatrix.setIdentityM()
-            outputModelMatrix.translateM(x, y)
-            outputModelMatrix.scaleM((scaleX), (scaleY))
-        }
-    }
     // Calculate the aspect ratio whenever the size of the Composable changes
     AndroidView(
         factory = { context ->
@@ -66,13 +52,13 @@ fun RainbowBox() {
 
                     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
                         glViewport(0, 0, width, height)
-                        aspectRatio = width.toFloat() / height
+                        aspectRatio = height.toFloat()
                     }
 
                     override fun onDrawFrame(gl: GL10?) {
                         // set background to white
-                        glClearColor(1.0f, 1.0f, 1.0f, 1.0f)
-                        glClear(GL_COLOR_BUFFER_BIT)
+//                        glClearColor(1.0f, 1.0f, 1.0f, 1.0f)
+//                        glClear(GL_COLOR_BUFFER_BIT)
 
                         setupMatrices()
 
@@ -83,7 +69,7 @@ fun RainbowBox() {
                         shaderProgram.bindUniforms(aspectRatio, layerModelMatrix, viewProjMatrix)
 
                         // draw box
-                        glDrawArrays(GL_TRIANGLE_STRIP, 0, rectOutlineVao.vertexCount())
+                        glDrawArrays(GL_TRIANGLE_FAN, 0, rectOutlineVao.vertexCount())
 
                         // unbind shader
                         shaderProgram.unbind()
