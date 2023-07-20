@@ -19,13 +19,16 @@ import kotlin.math.min
 fun RainbowBox() {
     var aspectRatio by remember { mutableStateOf(1.0f) }
 
-    val shaderProgram: ShaderProgram = ShaderProgram()
+    // Helper class that wraps the GLSL shaders, binds them etc
+     val shaderProgram: ShaderProgram = ShaderProgram()
 
-    val rectOutlineVao = RectOutlineVao()
+    // Helper class containing the vertex construction
+    // and binding code to use it with GL.
+     val rectOutlineVao = RectOutlineVao()
 
     // Matrices
-    val layerModelMatrix = FloatArray(16)
-    val viewProjMatrix = FloatArray(16)
+     val layerModelMatrix = FloatArray(16)
+     val viewProjMatrix = FloatArray(16)
 
     fun setupMatrices() {
         Matrix.setIdentityM(layerModelMatrix, 0)
@@ -34,6 +37,21 @@ fun RainbowBox() {
         Matrix.scaleM(layerModelMatrix, 0, 0.5f, 0.5f, 1.0f)
         Matrix.setIdentityM(viewProjMatrix, 0)
         Matrix.scaleM(viewProjMatrix, 0, 1.0f, aspectRatio, 1.0f)
+    }
+    object {
+
+        internal fun modelMatrixForBoundingBox(
+            layerSize: android.util.Size,
+            outputModelMatrix: FloatArray
+        ) {
+            val x = 0f
+            val y = 0f
+            val scaleX = layerSize.width / 2.0f
+            val scaleY = layerSize.height / 2.0f
+            outputModelMatrix.setIdentityM()
+            outputModelMatrix.translateM(x, y)
+            outputModelMatrix.scaleM((scaleX), (scaleY))
+        }
     }
     // Calculate the aspect ratio whenever the size of the Composable changes
     AndroidView(
@@ -53,8 +71,8 @@ fun RainbowBox() {
 
                     override fun onDrawFrame(gl: GL10?) {
                         // set background to white
-//                        glClearColor(1.0f, 1.0f, 1.0f, 1.0f)
-//                        glClear(GL_COLOR_BUFFER_BIT)
+                        glClearColor(1.0f, 1.0f, 1.0f, 1.0f)
+                        glClear(GL_COLOR_BUFFER_BIT)
 
                         setupMatrices()
 
@@ -78,13 +96,4 @@ fun RainbowBox() {
         modifier = Modifier.fillMaxSize()
     )
 
-//    Box(modifier = Modifier.fillMaxSize()) {
-//        Canvas(modifier = Modifier.fillMaxSize()) {
-//            val size = min(size.width, size.height)
-//            drawRect(
-//                color = Color.Blue, // Replace with the desired color
-//
-//            )
-//        }
-//    }
 }
