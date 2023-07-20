@@ -7,12 +7,16 @@ import android.util.Size
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import kotlin.math.min
 
@@ -21,7 +25,7 @@ fun RainbowBox() {
     var aspectRatio by remember { mutableStateOf(4.0f) }
 
     // Helper class that wraps the GLSL shaders, binds them etc
-     val shaderProgram: ShaderProgram = ShaderProgram()
+     val shaderProgram = ShaderProgram()
 
     // Helper class containing the vertex construction
     // and binding code to use it with GL.
@@ -35,7 +39,7 @@ fun RainbowBox() {
         Matrix.setIdentityM(layerModelMatrix, 0)
 
         Matrix.setIdentityM(layerModelMatrix, 0)
-        Matrix.scaleM(layerModelMatrix, 0, 0.5f, 0.5f, 1.0f)
+        Matrix.scaleM(layerModelMatrix, 0, 0.5f, 2.5f, 1.0f)
         Matrix.setIdentityM(viewProjMatrix, 0)
         Matrix.scaleM(viewProjMatrix, 0, 2.0f, aspectRatio, 0.0f)
     }
@@ -53,11 +57,11 @@ fun RainbowBox() {
 
                     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
                         glViewport(0, 0, width, height)
-                        aspectRatio = height.toFloat()
+                        aspectRatio = width.toFloat() / height.toFloat()
                     }
 
                     override fun onDrawFrame(gl: GL10?) {
-                        // set background to white
+//                        // set background to white
 //                        glClearColor(1.0f, 1.0f, 1.0f, 1.0f)
 //                        glClear(GL_COLOR_BUFFER_BIT)
 
@@ -80,10 +84,7 @@ fun RainbowBox() {
                 })
             }
         },
-        modifier = Modifier.fillMaxSize()
-    ){gls ->
-
-
-    }
-
+        modifier = Modifier
+            .fillMaxSize() // Specify the desired size here
+    )
 }

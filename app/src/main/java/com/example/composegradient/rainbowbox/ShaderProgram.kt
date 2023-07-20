@@ -43,21 +43,6 @@ class ShaderProgram {
         GLES20.glUseProgram(0)
     }
 
-    private fun compileShader(shaderType: Int, shaderSource: String): Int {
-        val shaderId = GLES20.glCreateShader(shaderType)
-        GLES20.glShaderSource(shaderId, shaderSource)
-        GLES20.glCompileShader(shaderId)
-
-        val compileStatus = IntArray(1)
-        GLES20.glGetShaderiv(shaderId, GLES20.GL_COMPILE_STATUS, compileStatus, 0)
-
-        if (compileStatus[0] == 0) {
-            val log = GLES20.glGetShaderInfoLog(shaderId)
-            GLES20.glDeleteShader(shaderId)
-            throw RuntimeException("Failed to compile vertex shader: \n$log")
-        }
-        return shaderId
-    }
 
     private fun compileAndLinkShaders() {
         // compile both the vertex and fragment shaders
@@ -90,13 +75,29 @@ class ShaderProgram {
         aspectRatioUniformLocation = GLES20.glGetUniformLocation(shaderProgram, "uAspectRatio")
     }
 
-    // Helper function for the animation
-    private fun timeOffset(dashCount: Float, scale: Float): Float {
-        // Why 800? It looks good.
-        return (SystemClock.uptimeMillis() % (800 * dashCount * scale)) / (800.0f * dashCount * scale)
-    }
 
-    companion object {
-        private const val DASH_LENGTH = 2.0f
+}
+
+
+// Helper function for the animation
+private const val DASH_LENGTH = 2.0f
+fun timeOffset(dashCount: Float, scale: Float): Float {
+    // Why 800? It looks good.
+    return (SystemClock.uptimeMillis() % (800 * dashCount * scale)) / (800.0f * dashCount * scale)
+}
+
+fun compileShader(shaderType: Int, shaderSource: String): Int {
+    val shaderId = GLES20.glCreateShader(shaderType)
+    GLES20.glShaderSource(shaderId, shaderSource)
+    GLES20.glCompileShader(shaderId)
+
+    val compileStatus = IntArray(1)
+    GLES20.glGetShaderiv(shaderId, GLES20.GL_COMPILE_STATUS, compileStatus, 0)
+
+    if (compileStatus[0] == 0) {
+        val log = GLES20.glGetShaderInfoLog(shaderId)
+        GLES20.glDeleteShader(shaderId)
+        throw RuntimeException("Failed to compile vertex shader: \n$log")
     }
+    return shaderId
 }
