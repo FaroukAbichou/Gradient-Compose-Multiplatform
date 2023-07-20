@@ -20,15 +20,7 @@ class MainActivity : ComponentActivity() {
             ComposeGradientTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                         CustomShaderBrush()
-                    } else
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text("Get a new phone")
-                        }
                 }
             }
         }

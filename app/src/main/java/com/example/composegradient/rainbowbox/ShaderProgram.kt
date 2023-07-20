@@ -25,7 +25,7 @@ class ShaderProgram {
      */
     fun bindUniforms(aspectRatio: Float, layerModelMatrix: FloatArray, viewProjMatrix: FloatArray) {
         val perimeter = 50.0f
-        val scale = 20.0f
+        val scale = 10.0f
         val dashCount = perimeter / DASH_LENGTH * scale
         GLES20.glUniformMatrix4fv(modelMatrixUniformLocation, 1, false, layerModelMatrix, 0)
         GLES20.glUniformMatrix4fv(viewProjUniformLocation, 1, false, viewProjMatrix, 0)
