@@ -2,6 +2,10 @@ package com.example.composegradient.rainbowbox
 
 import android.opengl.GLES20
 import android.os.SystemClock
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 
 class ShaderProgram {
 
@@ -15,8 +19,27 @@ class ShaderProgram {
     private var modelMatrixUniformLocation = -1
     private var stretchFactorUniformLocation = -1
 
+    val color1 = Color(0.8667f, 0.4863f, 0.898f, 1.0f) // Color #dd7ce5
+    val color2 = Color(0.8824f, 0.7294f, 0.6588f, 1.0f) // Color #e1baa8
+
     fun initialize() {
         compileAndLinkShaders()
+    }
+
+    fun setColorUniform(uniformName: String, colorValue: FloatArray) {
+        val location = GLES20.glGetUniformLocation(shaderProgram, uniformName)
+        if (location >= 0) {
+            GLES20.glUniform4fv(location, 1, colorValue, 0)
+        }
+    }
+
+    fun Color.toVec4(): FloatArray {
+        val colorInt = this.toArgb()
+        val red = ((colorInt shr 16) and 0xFF) / 255.0f
+        val green = ((colorInt shr 8) and 0xFF) / 255.0f
+        val blue = (colorInt and 0xFF) / 255.0f
+        val alpha = ((colorInt shr 24) and 0xFF) / 255.0f
+        return floatArrayOf(red, green, blue, alpha)
     }
 
     /**
@@ -40,6 +63,8 @@ class ShaderProgram {
         GLES20.glUniform1f(dashCountUniformLocation, dashCount)
         GLES20.glUniform1f(timeOffsetUniformLocation, timeOffset(2f, 25.0f))
         GLES20.glUniform1f(stretchFactorUniformLocation, stretchFactor)
+        setColorUniform("uColor1", color1.toVec4())
+        setColorUniform("uColor2", color2.toVec4())
     }
 
     fun bind() {
@@ -83,6 +108,7 @@ class ShaderProgram {
 
 
 private const val DASH_LENGTH = 2.0f
+
 
 // Helper function for the animation
 fun timeOffset(dashCount: Float, scale: Float): Float {

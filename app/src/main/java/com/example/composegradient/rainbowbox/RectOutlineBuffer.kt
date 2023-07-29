@@ -26,11 +26,7 @@ class RectOutlineBuffer {
         if (_vbo[0] != UNINITIALIZED) {
             return
         }
-        val o = 1.0f
 
-        // @formatter:off
-        /* ktlint-disable no-multi-spaces */
-        /* ktlint-disable indent */
         val attributeValues = floatArrayOf(
             //position   offset             progress  padding
             -1.0f, -1.0f,  0.0f, 1.0f,      0.0f,0f, 0f, 0f,
@@ -38,9 +34,6 @@ class RectOutlineBuffer {
             1.0f, 1.0f,    0.0f, 1.0f,      1.0f,0f, 0f, 0f,
             -1.0f, 1.0f,   0.0f, 1.0f,      1.0f,0f, 0f, 0f,
         )
-        /* ktlint-disable indent */
-        /* ktlint-disable no-multi-spaces */
-        // @formatter:on
 
         vertexCount = attributeValues.size / numberValuesPerVertex
         val attributesBuffer = Util.createFloatBuffer(attributeValues)
