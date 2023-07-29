@@ -3,9 +3,16 @@ package com.example.composegradient.rainbowbox
 import android.opengl.GLES20.*
 import android.opengl.GLSurfaceView
 import android.opengl.Matrix
+import androidx.compose.foundation.layout.Box
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Canvas
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.viewinterop.AndroidView
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
@@ -18,14 +25,14 @@ fun GradyBox(
     viewProjMatrix: FloatArray = FloatArray(16),
     shaderProgram: ShaderProgram = ShaderProgram(),
     rectOutlineVao: RectOutlineVao = RectOutlineVao(),
-    stretchFactor: Float = 0.1f,
+    stretchFactor: Float = 0.08f,
     colors : List<Color>  = listOf(
-        Color(1.0f, 0.0f, 0.0f, 1.0f), // Red
-        Color(1.0f, 0.0f, 0.0f, 1.0f), // Red
-        Color(1.0f, 0.0f, 0.0f, 1.0f), // Red
-        Color(0xff111111),
-        Color(1.0f, 0.0f, 0.0f, 1.0f), // Red
-        Color(1.0f, 0.0f, 0.0f, 1.0f), // Red
+        Color(0xffFFFFFF),
+        Color(0xffa62044),
+        Color(0xffFFFFFF),
+        Color(0xffc8204e),
+        Color(0xffFFFFFF),
+        Color(0xff56486a),
     )
 ) {
 
@@ -73,8 +80,7 @@ fun GradyBox(
                     }
                 })
             }
-
         },
-        modifier = modifier
+        modifier = modifier,
     )
 }
