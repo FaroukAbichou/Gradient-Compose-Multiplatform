@@ -53,8 +53,6 @@ fun GradyBox(
                     }
 
                     override fun onDrawFrame(gl: GL10?) {
-
-
                         setupMatrices()
 
                         rectOutlineVao.bind()
