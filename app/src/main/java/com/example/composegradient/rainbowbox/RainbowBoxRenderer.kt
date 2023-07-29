@@ -18,7 +18,14 @@ fun GradyBox(
     viewProjMatrix: FloatArray = FloatArray(16),
     shaderProgram: ShaderProgram = ShaderProgram(),
     rectOutlineVao: RectOutlineVao = RectOutlineVao(),
-    stretchFactor: Float = 0.1f
+    stretchFactor: Float = 0.1f,
+    colors : List<Color>  = listOf(
+        Color(0xff111111),
+        Color(1.0f, 1.0f, 0.0f, 1.0f), // Yellow
+        Color(0xff111111),
+        Color(1.0f, 0.0f, 0.0f, 1.0f), // Red
+        Color(0xff111111),
+    )
 ) {
 
     fun setupMatrices() {
@@ -54,13 +61,7 @@ fun GradyBox(
                             layerModelMatrix,
                             viewProjMatrix,
                             stretchFactor,
-                            colors = listOf(
-                                Color(0xff111111),
-                                Color(0xff111111),
-                                Color(0xff111111),
-                                Color(1.0f, 1.0f, 0.0f, 1.0f), // Yellow
-                                Color(1.0f, 0.0f, 0.0f, 1.0f), // Red
-                            )
+                            colors
                         )
 
                         // draw box

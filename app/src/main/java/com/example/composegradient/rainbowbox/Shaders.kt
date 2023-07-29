@@ -56,10 +56,11 @@ val FRAGMENT_SHADER = """
     uniform highp float uDashCount;
     uniform highp float uTimeOffset;
     uniform highp float uStretchFactor;
+    uniform highp float uNumberOfColors;
     
     in highp float vProgress;
 
-    uniform vec4 uColors[5]; // Uniform array for colors
+    uniform vec4 uColors[uNumberOfColors]; // Uniform array for colors
 
     out vec4 oColor;
     
@@ -100,7 +101,7 @@ val FRAGMENT_SHADER = """
         // Now bringing it all together into the final progress value that should give a nice smooth gradient along the perimeter.
         float progress = (vProgress + uTimeOffset * 16.0f) * uStretchFactor;
          // The number of colors passed as a uniform array
-        int numColors = 5; // Replace MAX_COLORS with the maximum number of colors
+        int numColors = uNumberOfColors; // Replace MAX_COLORS with the maximum number of colors
 
         // Get the color index based on the number of colors and progress
         float colorIndex = mod(uDashCount * progress / float(numColors), float(numColors) );

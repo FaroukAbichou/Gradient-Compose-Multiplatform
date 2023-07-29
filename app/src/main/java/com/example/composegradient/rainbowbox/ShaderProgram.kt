@@ -16,7 +16,7 @@ class ShaderProgram {
     private var viewProjUniformLocation = -1
     private var modelMatrixUniformLocation = -1
     private var stretchFactorUniformLocation = -1
-
+    private var numberOfColors = -1
     private var colorArrayLocation = -1
 
     fun initialize() {
@@ -25,7 +25,6 @@ class ShaderProgram {
     }
 
     fun setColorsUniform(colors: List<Color>) {
-
         val colorArray = FloatArray(colors.size * 4)
         colors.forEachIndexed { index, color ->
             color.toVec4().copyInto(colorArray, index * 4)
@@ -51,6 +50,7 @@ class ShaderProgram {
         GLES20.glUniform1f(timeOffsetUniformLocation, timeOffset(2f, 25.0f))
         GLES20.glUniform1f(stretchFactorUniformLocation, stretchFactor)
         setColorsUniform(colors)
+
     }
 
     fun bind() {
@@ -89,6 +89,7 @@ class ShaderProgram {
         timeOffsetUniformLocation = GLES20.glGetUniformLocation(shaderProgram, "uTimeOffset")
         aspectRatioUniformLocation = GLES20.glGetUniformLocation(shaderProgram, "uAspectRatio")
         stretchFactorUniformLocation = GLES20.glGetUniformLocation(shaderProgram, "uStretchFactor")
+        numberOfColors = GLES20.glGetUniformLocation(shaderProgram, "uNumberOfColors")
     }
 }
 
