@@ -23,17 +23,9 @@ fun CustomShaderBrush() {
         modifier = Modifier.background(Color.Blue),
         contentAlignment = androidx.compose.ui.Alignment.Center
     ) {
-        Box(
+        GradyBox(
             modifier = Modifier
-                .size(200.dp)
-                .clip(
-                    CircleShape
-                )
-        ) {
-            GradyBox(
-                modifier = Modifier
-                    .fillMaxSize(),
-            )
-        }
+                .fillMaxSize(),
+        )
     }
 }

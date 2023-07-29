@@ -13,6 +13,7 @@ class ShaderProgram {
     private var strokeWidthUniformLocation = -1
     private var viewProjUniformLocation = -1
     private var modelMatrixUniformLocation = -1
+    private var stretchFactorUniformLocation = -1
 
     fun initialize() {
         compileAndLinkShaders()
@@ -23,7 +24,12 @@ class ShaderProgram {
      * A uniform is a "constant" in the Shaders that doesn't change for each pixel,
      * but we still need to set the constants in order for it to function.
      */
-    fun bindUniforms(aspectRatio: Float, layerModelMatrix: FloatArray, viewProjMatrix: FloatArray) {
+    fun bindUniforms(
+        aspectRatio: Float,
+        layerModelMatrix: FloatArray,
+        viewProjMatrix: FloatArray,
+        stretchFactor: Float,
+    ) {
         val perimeter = 50.0f
         val scale = 10.0f
         val dashCount = perimeter / DASH_LENGTH * scale
@@ -33,6 +39,7 @@ class ShaderProgram {
         GLES20.glUniform1f(aspectRatioUniformLocation, aspectRatio)
         GLES20.glUniform1f(dashCountUniformLocation, dashCount)
         GLES20.glUniform1f(timeOffsetUniformLocation, timeOffset(2f, 25.0f))
+        GLES20.glUniform1f(stretchFactorUniformLocation, stretchFactor)
     }
 
     fun bind() {
@@ -42,8 +49,6 @@ class ShaderProgram {
     fun unbind() {
         GLES20.glUseProgram(0)
     }
-
-
 
     private fun compileAndLinkShaders() {
         // compile both the vertex and fragment shaders
@@ -66,14 +71,13 @@ class ShaderProgram {
             throw RuntimeException("Failed to link shader program: \n$log")
         }
 
-        // We need to find the location of the uniforms(variables) that we want to substitute into our program
-        // These locations will be used in `bindUniforms` function to substitute our variables into the shader.
         dashCountUniformLocation = GLES20.glGetUniformLocation(shaderProgram, "uDashCount")
         modelMatrixUniformLocation = GLES20.glGetUniformLocation(shaderProgram, "uModelMatrix")
         viewProjUniformLocation = GLES20.glGetUniformLocation(shaderProgram, "uViewProjMatrix")
         strokeWidthUniformLocation = GLES20.glGetUniformLocation(shaderProgram, "uStrokeWidth")
         timeOffsetUniformLocation = GLES20.glGetUniformLocation(shaderProgram, "uTimeOffset")
         aspectRatioUniformLocation = GLES20.glGetUniformLocation(shaderProgram, "uAspectRatio")
+        stretchFactorUniformLocation = GLES20.glGetUniformLocation(shaderProgram, "uStretchFactor")
     }
 
 

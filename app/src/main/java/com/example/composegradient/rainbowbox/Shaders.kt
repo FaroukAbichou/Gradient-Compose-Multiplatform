@@ -55,16 +55,20 @@ val FRAGMENT_SHADER = """
     uniform highp float uAspectRatio;
     uniform highp float uDashCount;
     uniform highp float uTimeOffset;
+    uniform highp float uStretchFactor;
 
     in highp float vProgress;
 
-    const vec4 COLORS[4] = vec4[](
+    const vec4 COLORS[7] = vec4[](
         vec4(0.9529, 0.6392, 0.5922, 1.0),
         vec4(0.9725, 0.9333, 0.5804, 1.0),
         vec4(0.9529, 0.6392, 0.5922, 1.0),
-        vec4(0.9725, 0.9333, 0.5804, 1.0)
+        vec4(0.9529, 0.6392, 0.5922, 1.0),
+        vec4(0.9529, 0.6392, 0.5922, 1.0),
+        vec4(0.9725, 0.9333, 0.5804, 1.0),
+        vec4(0.9529, 0.6392, 0.5922, 1.0)
         // Re-adding the first color to avoid mod() operation after 'colorIndex + 1'
-        );
+    );
 
     out vec4 oColor;
 
@@ -102,7 +106,7 @@ val FRAGMENT_SHADER = """
         // We multiply by uTimeOffset to give the animation over time.
         // We multiply uTimeOffset by 16 to make the speed of the animation a bit faster, and 0.125 to stretch out the gradient a bit more.
         // Now bringing it all together into the final progress value that should give a nice smooth gradient along the perimeter.
-        float progress = (vProgress + uTimeOffset * 16.0f) * 0.125;
+        float progress = (vProgress + uTimeOffset * 16.0f) * uStretchFactor;
         float colorIndex = mod(uDashCount * progress / 4.0, 6.0); // There are actually 6 colors, not 7
         vec4 currentColor = COLORS[int(floor(colorIndex))];
         vec4 nextColor = COLORS[int(floor(colorIndex)) + 1];

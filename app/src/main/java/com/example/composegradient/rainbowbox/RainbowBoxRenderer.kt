@@ -26,6 +26,7 @@ fun GradyBox(
     viewProjMatrix: FloatArray = FloatArray(16),
     shaderProgram: ShaderProgram = ShaderProgram(),
     rectOutlineVao: RectOutlineVao = RectOutlineVao(),
+    stretchFactor: Float = 0.125f
 ) {
 
     fun setupMatrices() {
@@ -58,7 +59,12 @@ fun GradyBox(
 
                         rectOutlineVao.bind()
                         shaderProgram.bind()
-                        shaderProgram.bindUniforms(aspectRatio, layerModelMatrix, viewProjMatrix)
+                        shaderProgram.bindUniforms(
+                            aspectRatio,
+                            layerModelMatrix,
+                            viewProjMatrix,
+                            stretchFactor
+                        )
 
                         // draw box
                         glDrawArrays(GL_TRIANGLE_FAN, 0, rectOutlineVao.vertexCount())
