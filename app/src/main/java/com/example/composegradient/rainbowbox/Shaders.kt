@@ -56,11 +56,11 @@ val FRAGMENT_SHADER = """
     uniform highp float uDashCount;
     uniform highp float uTimeOffset;
     uniform highp float uStretchFactor;
-    uniform highp float uNumberOfColors;
+    uniform highp int uNumberOfColors;
     
     in highp float vProgress;
-
-    uniform vec4 uColors[uNumberOfColors]; // Uniform array for colors
+    
+    uniform vec4 uColors[6]; // Uniform array for colors
 
     out vec4 oColor;
     

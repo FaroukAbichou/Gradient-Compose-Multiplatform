@@ -49,6 +49,7 @@ class ShaderProgram {
         GLES20.glUniform1f(dashCountUniformLocation, dashCount)
         GLES20.glUniform1f(timeOffsetUniformLocation, timeOffset(2f, 25.0f))
         GLES20.glUniform1f(stretchFactorUniformLocation, stretchFactor)
+        GLES20.glUniform1i(numberOfColors, colors.size)
         setColorsUniform(colors)
 
     }
