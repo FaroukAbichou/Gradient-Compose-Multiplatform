@@ -79,13 +79,12 @@ class ShaderProgram {
         aspectRatioUniformLocation = GLES20.glGetUniformLocation(shaderProgram, "uAspectRatio")
         stretchFactorUniformLocation = GLES20.glGetUniformLocation(shaderProgram, "uStretchFactor")
     }
-
-
 }
 
 
-// Helper function for the animation
 private const val DASH_LENGTH = 2.0f
+
+// Helper function for the animation
 fun timeOffset(dashCount: Float, scale: Float): Float {
     // Why 800? It looks good.
     return (SystemClock.uptimeMillis() % (800 * dashCount * scale)) / (800.0f * dashCount * scale)
