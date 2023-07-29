@@ -56,14 +56,13 @@ val FRAGMENT_SHADER = """
     uniform highp float uDashCount;
     uniform highp float uTimeOffset;
     uniform highp float uStretchFactor;
-
-    uniform vec4 uColor1; // First external color
-    uniform vec4 uColor2; // Second external color
-
+    
     in highp float vProgress;
 
-    out vec4 oColor;
+    uniform vec4 uColors[5]; // Uniform array for colors
 
+    out vec4 oColor;
+    
     float isInRange(float x, float start, float end) {
         return step(start, x) * (1.0 - step(end, x));
     }
@@ -97,11 +96,18 @@ val FRAGMENT_SHADER = """
         // vProgress is interpolated between 0 - 1 by the vertex shader. 
         // We multiply by uTimeOffset to give the animation over time.
         // We multiply uTimeOffset by 16 to make the speed of the animation a bit faster, and 0.125 to stretch out the gradient a bit more.
+        
         // Now bringing it all together into the final progress value that should give a nice smooth gradient along the perimeter.
         float progress = (vProgress + uTimeOffset * 16.0f) * uStretchFactor;
-        float colorIndex = mod(uDashCount * progress / 4.0, 6.0); // There are actually 6 colors, not 7
-        vec4 currentColor = mix(uColor1, uColor2, fract(colorIndex)); // Use external colors here
-        vec4 nextColor = mix(uColor1, uColor2, fract(colorIndex + 1.0)); // Use external colors here
+         // The number of colors passed as a uniform array
+        int numColors = 5; // Replace MAX_COLORS with the maximum number of colors
+
+        // Get the color index based on the number of colors and progress
+        float colorIndex = mod(uDashCount * progress / float(numColors), float(numColors));
+
+        // Sample the colors from the uniform array
+        vec4 currentColor = uColors[int(colorIndex)];
+        vec4 nextColor = uColors[int(colorIndex) + 1];
 
         // The output color of the pixel is a mix between the two colors, producing the gradient effect
         oColor = mix(currentColor, nextColor, fract(colorIndex));

@@ -19,18 +19,12 @@ class ShaderProgram {
     private var modelMatrixUniformLocation = -1
     private var stretchFactorUniformLocation = -1
 
-    val color1 = Color(0.8667f, 0.4863f, 0.898f, 1.0f) // Color #dd7ce5
-    val color2 = Color(0.8824f, 0.7294f, 0.6588f, 1.0f) // Color #e1baa8
+    private var colorArrayLocation = -1
+    private val MAX_COLORS = 5 // Set the maximum number of colors to 5
 
     fun initialize() {
         compileAndLinkShaders()
-    }
-
-    fun setColorUniform(uniformName: String, colorValue: FloatArray) {
-        val location = GLES20.glGetUniformLocation(shaderProgram, uniformName)
-        if (location >= 0) {
-            GLES20.glUniform4fv(location, 1, colorValue, 0)
-        }
+        colorArrayLocation = GLES20.glGetUniformLocation(shaderProgram, "uColors")
     }
 
     fun Color.toVec4(): FloatArray {
@@ -42,6 +36,24 @@ class ShaderProgram {
         return floatArrayOf(red, green, blue, alpha)
     }
 
+    fun setColorsUniform(colors: List<Color>) {
+        if (colors.size > MAX_COLORS) {
+            throw IllegalArgumentException("Exceeded maximum number of colors")
+        }
+
+        val colorArray = FloatArray(MAX_COLORS * 4)
+        colors.forEachIndexed { index, color ->
+            color.toVec4().copyInto(colorArray, index * 4)
+        }
+        GLES20.glUniform4fv(colorArrayLocation, MAX_COLORS, colorArray, 0)
+    }
+    val colors = listOf(
+        Color(1.0f, 0.0f, 0.0f, 1.0f), // Red
+        Color(0.0f, 1.0f, 0.0f, 1.0f), // Green
+        Color(0.0f, 0.0f, 1.0f, 1.0f), // Blue
+        Color(1.0f, 1.0f, 0.0f, 1.0f), // Yellow
+        Color(1.0f, 0.0f, 0.0f, 1.0f), // Red
+    )
     /**
      * `bindUniforms` is setting variables on the shader program.
      * A uniform is a "constant" in the Shaders that doesn't change for each pixel,
@@ -63,8 +75,7 @@ class ShaderProgram {
         GLES20.glUniform1f(dashCountUniformLocation, dashCount)
         GLES20.glUniform1f(timeOffsetUniformLocation, timeOffset(2f, 25.0f))
         GLES20.glUniform1f(stretchFactorUniformLocation, stretchFactor)
-        setColorUniform("uColor1", color1.toVec4())
-        setColorUniform("uColor2", color2.toVec4())
+        setColorsUniform(colors)
     }
 
     fun bind() {
