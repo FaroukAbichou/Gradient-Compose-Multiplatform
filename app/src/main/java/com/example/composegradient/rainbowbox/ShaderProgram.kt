@@ -2,8 +2,6 @@ package com.example.composegradient.rainbowbox
 
 import android.opengl.GLES20
 import android.os.SystemClock
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 
@@ -20,50 +18,27 @@ class ShaderProgram {
     private var stretchFactorUniformLocation = -1
 
     private var colorArrayLocation = -1
-    private val MAX_COLORS = 5 // Set the maximum number of colors to 5
 
     fun initialize() {
         compileAndLinkShaders()
         colorArrayLocation = GLES20.glGetUniformLocation(shaderProgram, "uColors")
     }
 
-    fun Color.toVec4(): FloatArray {
-        val colorInt = this.toArgb()
-        val red = ((colorInt shr 16) and 0xFF) / 255.0f
-        val green = ((colorInt shr 8) and 0xFF) / 255.0f
-        val blue = (colorInt and 0xFF) / 255.0f
-        val alpha = ((colorInt shr 24) and 0xFF) / 255.0f
-        return floatArrayOf(red, green, blue, alpha)
-    }
-
     fun setColorsUniform(colors: List<Color>) {
-        if (colors.size > MAX_COLORS) {
-            throw IllegalArgumentException("Exceeded maximum number of colors")
-        }
 
-        val colorArray = FloatArray(MAX_COLORS * 4)
+        val colorArray = FloatArray(colors.size * 4)
         colors.forEachIndexed { index, color ->
             color.toVec4().copyInto(colorArray, index * 4)
         }
-        GLES20.glUniform4fv(colorArrayLocation, MAX_COLORS, colorArray, 0)
+        GLES20.glUniform4fv(colorArrayLocation, colors.size, colorArray, 0)
     }
-    val colors = listOf(
-        Color(1.0f, 0.0f, 0.0f, 1.0f), // Red
-        Color(0.0f, 1.0f, 0.0f, 1.0f), // Green
-        Color(0.0f, 0.0f, 1.0f, 1.0f), // Blue
-        Color(1.0f, 1.0f, 0.0f, 1.0f), // Yellow
-        Color(1.0f, 0.0f, 0.0f, 1.0f), // Red
-    )
-    /**
-     * `bindUniforms` is setting variables on the shader program.
-     * A uniform is a "constant" in the Shaders that doesn't change for each pixel,
-     * but we still need to set the constants in order for it to function.
-     */
+
     fun bindUniforms(
         aspectRatio: Float,
         layerModelMatrix: FloatArray,
         viewProjMatrix: FloatArray,
         stretchFactor: Float,
+        colors: List<Color>
     ) {
         val perimeter = 50.0f
         val scale = 10.0f
@@ -125,6 +100,15 @@ private const val DASH_LENGTH = 2.0f
 fun timeOffset(dashCount: Float, scale: Float): Float {
     // Why 800? It looks good.
     return (SystemClock.uptimeMillis() % (800 * dashCount * scale)) / (800.0f * dashCount * scale)
+}
+
+fun Color.toVec4(): FloatArray {
+    val colorInt = this.toArgb()
+    val red = ((colorInt shr 16) and 0xFF) / 255.0f
+    val green = ((colorInt shr 8) and 0xFF) / 255.0f
+    val blue = (colorInt and 0xFF) / 255.0f
+    val alpha = ((colorInt shr 24) and 0xFF) / 255.0f
+    return floatArrayOf(red, green, blue, alpha)
 }
 
 fun compileShader(shaderType: Int, shaderSource: String): Int {

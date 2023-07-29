@@ -103,7 +103,7 @@ val FRAGMENT_SHADER = """
         int numColors = 5; // Replace MAX_COLORS with the maximum number of colors
 
         // Get the color index based on the number of colors and progress
-        float colorIndex = mod(uDashCount * progress / float(numColors), float(numColors));
+        float colorIndex = mod(uDashCount * progress / float(numColors), float(numColors) );
 
         // Sample the colors from the uniform array
         vec4 currentColor = uColors[int(colorIndex)];

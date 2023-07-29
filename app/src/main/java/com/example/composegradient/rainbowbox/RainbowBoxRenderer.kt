@@ -5,6 +5,7 @@ import android.opengl.GLSurfaceView
 import android.opengl.Matrix
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.viewinterop.AndroidView
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
@@ -52,7 +53,14 @@ fun GradyBox(
                             aspectRatio,
                             layerModelMatrix,
                             viewProjMatrix,
-                            stretchFactor
+                            stretchFactor,
+                            colors = listOf(
+                                Color(0xff111111),
+                                Color(0xff111111),
+                                Color(0xff111111),
+                                Color(1.0f, 1.0f, 0.0f, 1.0f), // Yellow
+                                Color(1.0f, 0.0f, 0.0f, 1.0f), // Red
+                            )
                         )
 
                         // draw box
