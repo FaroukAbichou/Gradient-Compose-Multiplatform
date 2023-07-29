@@ -59,16 +59,15 @@ val FRAGMENT_SHADER = """
 
     in highp float vProgress;
 
-    const vec4 COLORS[7] = vec4[](
-        vec4(0.9529, 0.6392, 0.5922, 1.0),
-        vec4(0.9725, 0.9333, 0.5804, 1.0),
-        vec4(0.9529, 0.6392, 0.5922, 1.0),
-        vec4(0.9529, 0.6392, 0.5922, 1.0),
-        vec4(0.9529, 0.6392, 0.5922, 1.0),
-        vec4(0.9725, 0.9333, 0.5804, 1.0),
-        vec4(0.9529, 0.6392, 0.5922, 1.0)
-        // Re-adding the first color to avoid mod() operation after 'colorIndex + 1'
-    );
+   const vec4 COLORS[7] = vec4[](
+    vec4(0.8667, 0.4863, 0.898, 1.0),   // #dd7ce5
+    vec4(0.8824, 0.7294, 0.6588, 1.0),   // #e1baa8
+    vec4(0.8471, 0.9608, 0.7451, 1.0),   // #d8f5be
+    vec4(0.5333, 0.8627, 0.949, 1.0),    // #88dcf2
+    vec4(0.4588, 0.5804, 0.8706, 1.0),   // #7594de
+    vec4(0.4275, 0.3961, 0.8471, 1.0),   // #6d65d8
+    vec4(0.8667, 0.4863, 0.898, 1.0)     // Re-adding the first color to complete the loop
+);
 
     out vec4 oColor;
 

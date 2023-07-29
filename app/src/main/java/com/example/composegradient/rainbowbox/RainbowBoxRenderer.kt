@@ -26,7 +26,7 @@ fun GradyBox(
     viewProjMatrix: FloatArray = FloatArray(16),
     shaderProgram: ShaderProgram = ShaderProgram(),
     rectOutlineVao: RectOutlineVao = RectOutlineVao(),
-    stretchFactor: Float = 0.25f
+    stretchFactor: Float = 0.1f
 ) {
 
     fun setupMatrices() {

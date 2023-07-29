@@ -32,28 +32,11 @@ class RectOutlineBuffer {
         /* ktlint-disable no-multi-spaces */
         /* ktlint-disable indent */
         val attributeValues = floatArrayOf(
-            //pos        offset         progress      padding
-//            -o, o,       -o, 0.0f,      0.0f, 0f,     0f, 0f, // 1
-//            -o, o,        0.0f, 0.0f,   0.0f, 0f,     0f, 0f,// 2
-//            -o, -o,      -o, 0.0f,      0.25f,0f,     0f, 0f, // 3
-//            -o, -o,       0.0f, 0.0f,   0.25f,0f,     0f, 0f, // 4
-//            -o, -o,      -o, -o,        0.25f,0f,     0f, 0f, // 5
-//            -o, -o,       0.0f, -o,     0.25f,0f,     0f, 0f, // 6
-            -o, -o,       0.0f, 0.0f,   0.25f,0f,     0f, 0f, // 7 (4)
-//            o, -o,        0.0f, -o,     0.5f,0f,      0f, 0f, // 8
-//            o, -o,        0.0f, 0.0f,   0.5f,0f,      0f, 0f, // 9
-//            o, -o,        o, -o,        0.5f,0f,      0f, 0f,// 10
-//            o, -o,        o, 0.0f,      0.5f,0f,      0f, 0f, // 11
-            o, -o,        0.0f, 0.0f,   0.5f,0f,      0f, 0f, // 12 (9)
-//            o, o,         o, 0.0f,      0.75f,0f,     0f, 0f, // 13
-//            o, o,         0.0f, 0.0f,   0.75f,0f,     0f, 0f, // 14
-//            o, o,         o, o,         0.75f, 0f,    0f, 0f,// 15
-//            o, o,         0.0f, o,      0.75f,0f,     0f, 0f, // 16
-            o, o,         0.0f, 0.0f,   0.75f,0f,     0f, 0f, // 17 (14)
-//            -o, o,        0.0f, o,      1.0f,0f,      0f, 0f, // 18
-            -o, o,        0.0f, 0.0f,   1.0f, 0f,     0f, 0f,// 19 (2)
-//            -o, o,       -o, o,         0.0f, 0f,     0f, 0f,// 20
-            -o, o,       -o, 0.0f,      0.0f, 0f,     0f, 0f// 21 (1)
+            //position   offset             progress  padding
+            -1.0f, -1.0f,  0.0f, 1.0f,      0.0f,0f, 0f, 0f,
+            1.0f, -1.0f,   1.0f, 0.0f,      0.0f,0f, 0f, 0f,
+            1.0f, 1.0f,    0.0f, 1.0f,      1.0f,0f, 0f, 0f,
+            -1.0f, 1.0f,   0.0f, 1.0f,      1.0f,0f, 0f, 0f,
         )
         /* ktlint-disable indent */
         /* ktlint-disable no-multi-spaces */
