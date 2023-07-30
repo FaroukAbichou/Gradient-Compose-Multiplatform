@@ -10,10 +10,6 @@ import android.opengl.GLES30.glGenVertexArrays
 
 private const val UNINITIALIZED = -1
 
-/**
- * Vao = VertexArrayObject - OpenGL object that stores all of the state needed to supply vertex data.
- * https://www.khronos.org/opengl/wiki/Vertex_Specification
- */
 class RectOutlineVao {
     private val _vao = IntArray(1)
     private val vao: Int

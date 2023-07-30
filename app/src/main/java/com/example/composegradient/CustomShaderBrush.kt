@@ -28,7 +28,6 @@ import com.example.composegradient.rainbowbox.FRAGMENT_SHADER
 import com.example.composegradient.rainbowbox.GradyBox
 
 
-@OptIn(ExperimentalTextApi::class)
 @Composable
 @Preview
 fun CustomShaderBrush() {
@@ -38,7 +37,6 @@ fun CustomShaderBrush() {
     ) {
         GradyBox(
             modifier = Modifier
-//                .fillMaxSize()
                 .size(
                     400.dp
                 )

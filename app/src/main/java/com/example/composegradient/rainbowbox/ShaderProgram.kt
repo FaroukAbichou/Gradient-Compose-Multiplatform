@@ -128,3 +128,12 @@ fun compileShader(shaderType: Int, shaderSource: String): Int {
     }
     return shaderId
 }
+
+
+val attributeValues = floatArrayOf(
+    //position   offset             progress  padding
+    -1.0f, -1.0f,  0.0f, 0.0f,      0.0f,0f,     0f, 0f,
+    1.0f, -1.0f,   0.0f, 0.0f,      0.0f,0.0f,     0f, 0f,
+    1.0f, 1.0f,    0.0f, 0.0f,      0.75f,0.75f, 0f, 0f,
+    -1.0f, 1.0f,   0.0f, 0.0f,      1.0f,1.0f,     0f, 0f,
+)

@@ -1,14 +1,16 @@
 package com.example.composegradient.rainbowbox
 
+import android.content.ContentValues
 import android.opengl.GLES11.glBindBuffer
 import android.opengl.GLES20
 import android.opengl.GLES20.glBufferData
 import android.opengl.GLES20.glDeleteBuffers
 import android.opengl.GLES20.glGenBuffers
+import java.util.jar.Attributes
 
 private const val UNINITIALIZED = -1
 
-class RectOutlineBuffer {
+class RectOutlineBuffer{
 
     private val _vbo = IntArray(1)
     private val vbo: Int
@@ -27,13 +29,7 @@ class RectOutlineBuffer {
             return
         }
 
-        val attributeValues = floatArrayOf(
-            //position   offset             progress  padding
-            -1.0f, -1.0f,  0.0f, 1.0f,      0.0f,0f, 0f, 0f,
-            1.0f, -1.0f,   1.0f, 0.0f,      0.0f,0f, 0f, 0f,
-            1.0f, 1.0f,    0.0f, 1.0f,      1.0f,0f, 0f, 0f,
-            -1.0f, 1.0f,   0.0f, 1.0f,      1.0f,0f, 0f, 0f,
-        )
+
 
         vertexCount = attributeValues.size / numberValuesPerVertex
         val attributesBuffer = Util.createFloatBuffer(attributeValues)
