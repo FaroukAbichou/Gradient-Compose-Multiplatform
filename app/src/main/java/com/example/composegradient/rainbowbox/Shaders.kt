@@ -69,48 +69,16 @@ val FRAGMENT_SHADER = """
     }
 
     void main() {
-        // We need to count the progress along the perimeter, keeping in mind that scaling along x and y is not uniform,
-        // meaning that our lovely square probably turned into a rect with some wild aspect ratio.
         float aspectRatio = uAspectRatio ;
-        float vertLen = 1.0f;
-        float horizLen = aspectRatio;
-        float perimeter = vertLen * 2.0 + horizLen * 2.0;
-        float vertProp = vertLen / perimeter;
-        float horizProp = horizLen / perimeter;
 
-        // Need to count the progress along the sides that we might have already passed
-        float pastProgress = step(0.25, vProgress) * vertProp +
-            step(0.5, vProgress) * horizProp +
-            step(0.75, vProgress) * vertProp;
-
-        // Now count the progress along the current side
-        float currentSegmentSize =
-            isInRange(vProgress, 0.0, 0.25) * vertProp +
-            isInRange(vProgress, 0.25, 0.5) * horizProp +
-            isInRange(vProgress, 0.5, 0.75) * vertProp +
-            isInRange(vProgress, 0.75, 1.0) * horizProp;
-
-        // Multiplying vProgress by 4 and getting a fraction would give us the progress along the current side.
-        // Why 4? Because the number of sides.
-        float currentProgress = fract(vProgress * 4.0f) * currentSegmentSize;
-
-        // vProgress is interpolated between 0 - 1 by the vertex shader. 
-        // We multiply by uTimeOffset to give the animation over time.
-        // We multiply uTimeOffset by 16 to make the speed of the animation a bit faster, and 0.125 to stretch out the gradient a bit more.
-        
-        // Now bringing it all together into the final progress value that should give a nice smooth gradient along the perimeter.
         float progress = (vProgress + uTimeOffset * 16.0f) * uStretchFactor;
-         // The number of colors passed as a uniform array
         int numColors = uNumberOfColors; // Replace MAX_COLORS with the maximum number of colors
 
-        // Get the color index based on the number of colors and progress
         float colorIndex = mod(uDashCount * progress / float(numColors), float(numColors) );
 
-        // Sample the colors from the uniform array
         vec4 currentColor = uColors[int(colorIndex)];
         vec4 nextColor = uColors[int(colorIndex) + 1];
 
-        // The output color of the pixel is a mix between the two colors, producing the gradient effect
         oColor = mix(currentColor, nextColor, fract(colorIndex));
     }
     """.trimIndent()
