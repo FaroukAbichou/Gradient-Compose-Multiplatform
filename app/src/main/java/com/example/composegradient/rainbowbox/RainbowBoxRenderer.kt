@@ -27,12 +27,12 @@ fun GradyBox(
     rectOutlineVao: RectOutlineVao = RectOutlineVao(),
     stretchFactor: Float = 0.08f,
     colors : List<Color>  = listOf(
-        Color(0xffFFFFFF),
         Color(0xffa62044),
         Color(0xffFFFFFF),
-        Color(0xffc8204e),
         Color(0xffFFFFFF),
-        Color(0xff56486a),
+        Color(0xffFFFFFF),
+        Color(0xffa62044),
+        Color(0xffa62044),
     )
 ) {
 
