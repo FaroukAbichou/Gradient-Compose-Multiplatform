@@ -56,18 +56,10 @@ val FRAGMENT_SHADER = """
     uniform highp float uDashCount;
     uniform highp float uTimeOffset;
     uniform highp float uStretchFactor;
-
+    
     in highp float vProgress;
 
-   const vec4 COLORS[7] = vec4[](
-    vec4(0.8667, 0.4863, 0.898, 1.0),   // #dd7ce5
-    vec4(0.8824, 0.7294, 0.6588, 1.0),   // #e1baa8
-    vec4(0.8471, 0.9608, 0.7451, 1.0),   // #d8f5be
-    vec4(0.5333, 0.8627, 0.949, 1.0),    // #88dcf2
-    vec4(0.4588, 0.5804, 0.8706, 1.0),   // #7594de
-    vec4(0.4275, 0.3961, 0.8471, 1.0),   // #6d65d8
-    vec4(0.8667, 0.4863, 0.898, 1.0)     // Re-adding the first color to complete the loop
-);
+    uniform vec4 uColors[7]; // Uniform array for colors
 
     out vec4 oColor;
 
@@ -107,8 +99,10 @@ val FRAGMENT_SHADER = """
         // Now bringing it all together into the final progress value that should give a nice smooth gradient along the perimeter.
         float progress = (vProgress + uTimeOffset * 16.0f) * uStretchFactor;
         float colorIndex = mod(uDashCount * progress / 4.0, 6.0); // There are actually 6 colors, not 7
-        vec4 currentColor = COLORS[int(floor(colorIndex))];
-        vec4 nextColor = COLORS[int(floor(colorIndex)) + 1];
+        
+        vec4 currentColor = uColors[int(colorIndex)];
+        vec4 nextColor = uColors[int(colorIndex) + 1];
+        
         // The output colour of the pixel is a mix between the two colors, producing the gradient effect
         oColor = mix(currentColor, nextColor, fract(colorIndex));
     }

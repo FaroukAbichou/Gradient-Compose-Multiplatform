@@ -1,22 +1,15 @@
 package com.example.composegradient.rainbowbox
 
-import android.graphics.Typeface
 import android.opengl.GLES20.*
 import android.opengl.GLSurfaceView
 import android.opengl.Matrix
-import androidx.compose.foundation.Canvas
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Paint
-import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
-import androidx.compose.ui.graphics.nativeCanvas
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.viewinterop.AndroidView
+
 
 @Composable
 fun GradyBox(
@@ -26,7 +19,16 @@ fun GradyBox(
     viewProjMatrix: FloatArray = FloatArray(16),
     shaderProgram: ShaderProgram = ShaderProgram(),
     rectOutlineVao: RectOutlineVao = RectOutlineVao(),
-    stretchFactor: Float = 0.1f
+    stretchFactor: Float = 0.1f,
+    colors : List<Color>  = listOf(
+        Color(0xffdd7ce5),
+        Color(0xffe1baa8),
+        Color(0xffd8f5be),
+        Color(0xff88dcf2),
+        Color(0xff7594de),
+        Color(0xff7594de),
+        Color(0xffdd7ce5),
+    )
 ) {
 
     fun setupMatrices() {
@@ -61,7 +63,8 @@ fun GradyBox(
                             aspectRatio,
                             layerModelMatrix,
                             viewProjMatrix,
-                            stretchFactor
+                            stretchFactor,
+                            colors
                         )
 
                         // draw box
@@ -72,8 +75,7 @@ fun GradyBox(
                     }
                 })
             }
-
         },
-        modifier = modifier
+        modifier = modifier,
     )
 }

@@ -2,6 +2,8 @@ package com.example.composegradient.rainbowbox
 
 import android.opengl.GLES20
 import android.os.SystemClock
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 
 class ShaderProgram {
 
@@ -14,21 +16,27 @@ class ShaderProgram {
     private var viewProjUniformLocation = -1
     private var modelMatrixUniformLocation = -1
     private var stretchFactorUniformLocation = -1
+    private var colorArrayLocation = -1
 
     fun initialize() {
         compileAndLinkShaders()
+        colorArrayLocation = GLES20.glGetUniformLocation(shaderProgram, "uColors")
     }
 
-    /**
-     * `bindUniforms` is setting variables on the shader program.
-     * A uniform is a "constant" in the Shaders that doesn't change for each pixel,
-     * but we still need to set the constants in order for it to function.
-     */
+    fun setColorsUniform(colors: List<Color>) {
+        val colorArray = FloatArray(colors.size * 4)
+        colors.forEachIndexed { index, color ->
+            color.toVec4().copyInto(colorArray, index * 4)
+        }
+        GLES20.glUniform4fv(colorArrayLocation, colors.size, colorArray, 0)
+    }
+
     fun bindUniforms(
         aspectRatio: Float,
         layerModelMatrix: FloatArray,
         viewProjMatrix: FloatArray,
         stretchFactor: Float,
+        colors: List<Color>
     ) {
         val perimeter = 50.0f
         val scale = 10.0f
@@ -40,6 +48,7 @@ class ShaderProgram {
         GLES20.glUniform1f(dashCountUniformLocation, dashCount)
         GLES20.glUniform1f(timeOffsetUniformLocation, timeOffset(2f, 25.0f))
         GLES20.glUniform1f(stretchFactorUniformLocation, stretchFactor)
+        setColorsUniform(colors)
     }
 
     fun bind() {
@@ -88,6 +97,15 @@ private const val DASH_LENGTH = 2.0f
 fun timeOffset(dashCount: Float, scale: Float): Float {
     // Why 800? It looks good.
     return (SystemClock.uptimeMillis() % (800 * dashCount * scale)) / (800.0f * dashCount * scale)
+}
+
+fun Color.toVec4(): FloatArray {
+    val colorInt = this.toArgb()
+    val red = ((colorInt shr 16) and 0xFF) / 255.0f
+    val green = ((colorInt shr 8) and 0xFF) / 255.0f
+    val blue = (colorInt and 0xFF) / 255.0f
+    val alpha = ((colorInt shr 24) and 0xFF) / 255.0f
+    return floatArrayOf(red, green, blue, alpha)
 }
 
 fun compileShader(shaderType: Int, shaderSource: String): Int {
