@@ -2,6 +2,7 @@ package com.example.composegradient
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
@@ -22,12 +23,7 @@ fun CustomShaderBrush() {
     ) {
         GradyBox(
             modifier = Modifier
-                .size(
-                    400.dp
-                )
-                .clip(
-                    CircleShape
-                )
+                .fillMaxSize()
         )
     }
 }

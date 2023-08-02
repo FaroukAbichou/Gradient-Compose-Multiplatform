@@ -27,7 +27,6 @@ fun GradyBox(
         Color(0xff88dcf2),
         Color(0xff7594de),
         Color(0xff7594de),
-        Color(0xffdd7ce5),
     )
 ) {
 

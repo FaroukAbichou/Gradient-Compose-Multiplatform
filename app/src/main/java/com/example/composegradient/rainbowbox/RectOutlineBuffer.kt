@@ -1,16 +1,14 @@
 package com.example.composegradient.rainbowbox
 
-import android.content.ContentValues
 import android.opengl.GLES11.glBindBuffer
 import android.opengl.GLES20
 import android.opengl.GLES20.glBufferData
 import android.opengl.GLES20.glDeleteBuffers
 import android.opengl.GLES20.glGenBuffers
-import java.util.jar.Attributes
 
 private const val UNINITIALIZED = -1
 
-class RectOutlineBuffer{
+class RectOutlineBuffer {
 
     private val _vbo = IntArray(1)
     private val vbo: Int
@@ -28,15 +26,28 @@ class RectOutlineBuffer{
         if (_vbo[0] != UNINITIALIZED) {
             return
         }
+        val o = 1.0f
 
-
+        // @formatter:off
+        /* ktlint-disable no-multi-spaces */
+        /* ktlint-disable indent */
+        val attributeValues = floatArrayOf(
+            //position   offset             progress  padding
+            -1.0f, -1.0f,  0.0f, 1.0f,      0.0f,0f, 0f, 0f,
+            1.0f, -1.0f,   1.0f, 0.0f,      0.0f,0f, 0f, 0f,
+            1.0f, 1.0f,    0.0f, 1.0f,      1.0f,0f, 0f, 0f,
+            -1.0f, 1.0f,   0.0f, 1.0f,      1.0f,0f, 0f, 0f,
+        )
+        /* ktlint-disable indent */
+        /* ktlint-disable no-multi-spaces */
+        // @formatter:on
 
         vertexCount = attributeValues.size / numberValuesPerVertex
-        val attributesBuffer = Util.createFloatBuffer(attributeValues)
+        val attributesBuffer = createFloatBuffer(attributeValues)
         glGenBuffers(1, _vbo, 0)
         glBindBuffer(GLES20.GL_ARRAY_BUFFER, vbo)
         glBufferData(
-            GLES20.GL_ARRAY_BUFFER, attributeValues.size * Util.FLOAT_SIZE,
+            GLES20.GL_ARRAY_BUFFER, attributeValues.size * FLOAT_SIZE,
             attributesBuffer, GLES20.GL_STATIC_DRAW
         )
         glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0)
