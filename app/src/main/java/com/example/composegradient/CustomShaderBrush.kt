@@ -1,18 +1,13 @@
 package com.example.composegradient
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import android.graphics.Paint
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.composegradient.rainbowbox.GradyBox
 
 
@@ -27,12 +22,19 @@ fun CustomShaderBrush() {
             modifier = Modifier
                 .fillMaxSize()
         )
-        Text(
-            "Farouk Abichou",
+        Canvas(
             modifier = Modifier
-                .background(Color.Transparent)
-                .border(100.dp, Color.White)
-            ,
-        )
+        ) {
+            drawContext.canvas.nativeCanvas.drawText(
+                "Hello World",
+                100f,
+                100f,
+                Paint().apply {
+                    textSize = 100f
+                    color = android.graphics.Color.RED
+                    strokeWidth = 10f
+                }
+            )
+        }
     }
 }
